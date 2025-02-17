@@ -43,4 +43,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // 1人のユーザーは1つの部署に所属する
+    public function department() {
+        return $this->belongsTo(Department::class);
+    }
+
+    // 1人のユーザーは複数の記録ができる
+    public function records(){
+        return $this->hasMany(Record::class);
+    }
 }
