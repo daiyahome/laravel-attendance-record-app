@@ -90,7 +90,7 @@ class UserController extends AdminController
         $form->email('email', __('Email'));
         $form->datetime('email_verified_at', __('メール認証'))->default(date('Y-m-d H:i:s'));
         $form->password('password', __('Password'));
-        $form->select('department_id', __('部署名'))->options(Department::all()->pluck('name', 'id'));
+        $form->select('department_id', __('部署名'))->options(Department::all()->pluck('name', 'id')->unique()->toArray());
         $form->select('department_id', __('事務所名'))->options(Department::all()->pluck('office', 'id'));
         $form->date('start_date', __('入社日'))->default(date('Y-m-d'));
         $form->datetime('deleted_at', __('Deleted at'))->default(NULL);
