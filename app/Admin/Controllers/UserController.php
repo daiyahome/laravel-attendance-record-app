@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\User;
+use App\Models\Department;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -30,7 +31,9 @@ class UserController extends AdminController
         $grid->column('name', __('スタッフ名'))->sortable();
         $grid->column('email', __('Email'));
         $grid->column('email_verified_at', __('メール認証日'));
-        $grid->column('department_id', __('部署id'))->sortable();
+        $grid->column('department_id', __('部署ID'))->sortable();
+        $grid->column('department.name', __('部署名'))->sortable();
+        $grid->column('department.office', __('事業所名'))->sortable();
         $grid->column('start_date', __('入社日'))->sortable();
         $grid->column('length', __('勤続年数'))->sortable();
         $grid->column('created_at', __('登録日'))->sortable();
@@ -64,7 +67,7 @@ class UserController extends AdminController
         $show->field('name', __('Name'));
         $show->field('email', __('Email'));
         $show->field('email_verified_at', __('Email verified at'));
-        $show->field('department_id', __('Department id'));
+        $show->field('department.name', __('Department Name'));
         $show->field('start_date', __('Start date'));
         $show->field('length', __('Length'));
         $show->field('created_at', __('Created at'));
@@ -83,13 +86,13 @@ class UserController extends AdminController
     {
         $form = new Form(new User());
 
-        $form->text('name', __('Name'));
+        $form->text('name', __('スタッフ名'));
         $form->email('email', __('Email'));
-        $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
+        $form->datetime('email_verified_at', __('メール認証'))->default(date('Y-m-d H:i:s'));
         $form->password('password', __('Password'));
-        $form->number('department_id', __('Department id'));
-        $form->date('start_date', __('Start date'))->default(date('Y-m-d'));
-        $form->number('length', __('Length'));
+        $form->select('department_id', __('部署名'))->options(Department::all()->pluck('name', 'id'));
+        $form->select('department_id', __('事務所名'))->options(Department::all()->pluck('office', 'id'));
+        $form->date('start_date', __('入社日'))->default(date('Y-m-d'));
         $form->datetime('deleted_at', __('Deleted at'))->default(NULL);
         
         $form->saving(function (Form $form) {

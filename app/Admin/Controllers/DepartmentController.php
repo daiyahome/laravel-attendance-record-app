@@ -70,8 +70,8 @@ class DepartmentController extends AdminController
     {
         $form = new Form(new Department());
 
-        $form->text('name', __('Name'));
-        $form->text('office', __('Office'));
+        $form->text('name', __('部署名'));
+        $form->text('office', __('事務所名'));
 
         return $form;
     }
