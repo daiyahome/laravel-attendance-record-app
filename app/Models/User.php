@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -25,7 +26,20 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'start_date',
     ];
+
+    // 勤続年数を計算するアクセサ
+    public function getLengthAttribute(){
+        if (!$this->start_date) {
+            return null; // start_dateがない場合はnull
+        }
+
+        $hireDate = Carbon::parse($this->start_date);
+        $diff = $hireDate->diff(Carbon::now());
+
+        return "{$diff->y} 年 {$diff->m} ヶ月";
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,6 +60,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
 
     // 1人のユーザーは1つの部署に所属する
     public function department() {

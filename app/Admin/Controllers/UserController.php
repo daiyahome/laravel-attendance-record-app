@@ -35,7 +35,7 @@ class UserController extends AdminController
         $grid->column('department.name', __('部署名'))->sortable();
         $grid->column('department.office', __('事業所名'))->sortable();
         $grid->column('start_date', __('入社日'))->sortable();
-        $grid->column('length', __('勤続年数'))->sortable();
+        $grid->column('length', __('勤続年数'))->display(function () {return $this->length;})->sortable();
         $grid->column('created_at', __('登録日'))->sortable();
         $grid->column('updated_at', __('更新日'))->sortable();
         $grid->column('deleted_at', __('削除'))->sortable();
