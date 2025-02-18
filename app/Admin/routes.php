@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Router;
 use App\Admin\Controllers\DepartmentController;
+use App\Admin\Controllers\UserController;
 
 Admin::routes();
 
@@ -14,5 +15,6 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('departments', DepartmentController::class);
+    $router->resource('users', UserController::class);
 
 });

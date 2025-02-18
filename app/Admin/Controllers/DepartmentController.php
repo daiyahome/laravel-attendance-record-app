@@ -26,11 +26,18 @@ class DepartmentController extends AdminController
     {
         $grid = new Grid(new Department());
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('office', __('Office'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('部署名'))->sortable();
+        $grid->column('office', __('事務所名'))->sortable();
+        $grid->column('created_at', __('登録日'))->sortable();
+        $grid->column('updated_at', __('更新日'))->sortable();
+        
+        $grid->filter(function($filter) {
+            $filter->like('name', '部署名');
+            $filter->like('office', '事務所名');
+            $filter->between('created_at', '登録日')->datetime();
+            $filter->between('updated_at', '更新日')->datetime();
+        });
 
         return $grid;
     }
