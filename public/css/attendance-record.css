@@ -8,3 +8,8 @@
     color: #ffffff;
     background-color: #0fbe9f;
 }
+
+/* FullCalendarの曜日下線を削除 */
+.fc-col-header-cell-cushion {
+    text-decoration: none; /* 下線を削除 */
+}
